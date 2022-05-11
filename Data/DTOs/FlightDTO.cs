@@ -9,7 +9,7 @@ public class FlightDTO
 
 	public int[] Tickets { get; set; }
 	public int Airplane { get; set; }
-	//public int CityOfArrival { get; set; }
-	//public int CityOfDeparture { get; set; }
+    public int CityOfArrival { get; set; }
+    public int CityOfDeparture { get; set; }
 }
 

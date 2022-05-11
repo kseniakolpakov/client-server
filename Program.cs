@@ -1,5 +1,4 @@
-﻿
-using application.Data.Services;
+﻿using application.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -11,6 +10,9 @@ builder.Services.AddTransient<FlightService>();
 builder.Services.AddTransient<PassengerService>();
 builder.Services.AddTransient<TicketService>();
 builder.Services.AddTransient<AirplaneService>();
+builder.Services.AddTransient<CityOfArrivalService>();
+builder.Services.AddTransient<CityOfDepartureService>();
+
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
@@ -27,4 +29,3 @@ app.UseCors(policy => policy
     .AllowAnyMethod()
     .AllowAnyHeader());
 app.Run();
-

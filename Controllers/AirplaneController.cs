@@ -15,13 +15,13 @@ public class AirplaneController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Airplane>>> GetAirplane()
+    public async Task<ActionResult<IEnumerable<Airplane>>> GetAirplanes()
     {
         return await _context.GetAirplanes();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Airplane>> GetFlight(int id)
+    public async Task<ActionResult<Airplane>> GetAirplane(int id)
     {
         var airplane = await _context.GetAirplane(id);
 

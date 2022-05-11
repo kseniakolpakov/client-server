@@ -28,14 +28,15 @@ public class FlightService
         {
             nflight.Airplane = _context.Airplanes.ToList().SingleOrDefault(flightInList => flightInList.Id == flight.Airplane);
         }
-        //if (flight.CityOfArrival != null)
-        //{
-        //    nflight.CityOfArrival = _context.CitiesOfArrival.ToList().SingleOrDefault(flightInList => flightInList.Id == flight.CityOfArrival);
-        //};
-        //if (flight.CityOfDeparture != null)
-        //{
-        //    nflight.CityOfDeparture = _context.CitiesOfDeparture.ToList().SingleOrDefault(flightInList => flightInList.Id == flight.CityOfDeparture);
-        //};
+        if (flight.CityOfArrival != null)
+        {
+            nflight.CityOfArrival = _context.CitiesOfArrival.ToList().SingleOrDefault(flightInList => flightInList.Id == flight.CityOfArrival);
+        };
+        if (flight.CityOfDeparture != null)
+        {
+            nflight.CityOfDeparture = _context.CitiesOfDeparture.ToList().SingleOrDefault(flightInList => flightInList.Id == flight.CityOfArrival);
+        };
+
         var result = _context.Flights.Add(nflight);
         await _context.SaveChangesAsync();
         return await Task.FromResult(result.Entity);
@@ -45,24 +46,22 @@ public class FlightService
     public async Task<Flight?> GetFlight(int id)
     {
 
-        var result = _context.Flights.Include(f => f.Tickets).Include(f => f.Airplane).FirstOrDefault(flight => flight.Id == id);
+        var result = _context.Flights.Include(f => f.Tickets).Include(f => f.Airplane).Include(f => f.CityOfArrival).Include(f => f.CityOfDeparture).FirstOrDefault(flight => flight.Id == id);
 
         return await Task.FromResult(result);
     }
 
-
-    //Получение всех полетов
+    //Получение всех рейсов
     public async Task<List<Flight>> GetFlights()
     {
-        var result = await _context.Flights.Include(f => f.Tickets).Include(f => f.Airplane).ToListAsync();
+        var result = await _context.Flights.Include(f => f.Tickets).Include(f => f.Airplane).Include(f => f.CityOfArrival).Include(f => f.CityOfDeparture).ToListAsync();
         return await Task.FromResult(result);
     }
 
-
-    // Изменение полета
+    // Изменение рейса
     public async Task<Flight?> UpdateFlight(int id, FlightDTO updatedFlight)
     {
-        var flight = await _context.Flights.Include(f => f.Tickets).Include(f => f.Airplane).FirstOrDefaultAsync(f => f.Id == id);
+        var flight = await _context.Flights.Include(f => f.Tickets).Include(f => f.Airplane).Include(f => f.CityOfArrival).Include(f => f.CityOfDeparture).FirstOrDefaultAsync(f => f.Id == id);
         if (flight != null)
         {
             flight.Number = updatedFlight.Number;
@@ -78,14 +77,14 @@ public class FlightService
             {
                 flight.Airplane = _context.Airplanes.ToList().SingleOrDefault(flightInList => flightInList.Id == updatedFlight.Airplane);
             }
-            //if (updatedFlight.CityOfArrival != null)
-            //{
-            //    flight.CityOfArrival = _context.CitiesOfArrival.ToList().SingleOrDefault(flightInList => flightInList.Id == updatedFlight.CityOfArrival);
-            //};
-            //if (updatedFlight.CityOfDeparture != null)
-            //{
-            //    flight.CityOfDeparture = _context.CitiesOfDeparture.ToList().SingleOrDefault(flightInList => flightInList.Id == updatedFlight.CityOfDeparture);
-            //};
+            if (updatedFlight.CityOfArrival != null)
+            {
+                flight.CityOfArrival = _context.CitiesOfArrival.ToList().SingleOrDefault(flightInList => flightInList.Id == updatedFlight.CityOfArrival);
+            };
+            if (updatedFlight.CityOfDeparture != null)
+            {
+                flight.CityOfDeparture = _context.CitiesOfDeparture.ToList().SingleOrDefault(flightInList => flightInList.Id == updatedFlight.CityOfDeparture);
+            };
             _context.Flights.Update(flight);
             _context.Entry(flight).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -94,7 +93,6 @@ public class FlightService
 
         return null;
     }
-
     // Удаление полета
     public async Task<bool> DeleteFlight(int id)
     {

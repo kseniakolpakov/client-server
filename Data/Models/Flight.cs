@@ -15,7 +15,7 @@ public class Flight
 
 	public IEnumerable<Ticket> Tickets { get; set; }
 	public Airplane Airplane { get; set; }
-	//public CityOfArrival CityOfArrival { get; set; }
-	//public CityOfDeparture CityOfDeparture { get; set; }
+    public CityOfArrival CityOfArrival { get; set; }
+    public CityOfDeparture CityOfDeparture { get; set; }
 }
 

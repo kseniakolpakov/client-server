@@ -24,6 +24,34 @@ namespace application.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "cities_of_arrival",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    country_name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_cities_of_arrival", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "cities_of_departure",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    country_name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_cities_of_departure", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "passengers",
                 columns: table => new
                 {
@@ -51,7 +79,9 @@ namespace application.Migrations
                     duration = table.Column<string>(type: "text", nullable: false),
                     time_of_departure = table.Column<string>(type: "text", nullable: false),
                     time_of_arrival = table.Column<string>(type: "text", nullable: false),
-                    airplane_id = table.Column<int>(type: "integer", nullable: false)
+                    airplane_id = table.Column<int>(type: "integer", nullable: false),
+                    city_of_arrival_id = table.Column<int>(type: "integer", nullable: false),
+                    city_of_departure_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,6 +90,18 @@ namespace application.Migrations
                         name: "fk_flights_airplanes_airplane_id",
                         column: x => x.airplane_id,
                         principalTable: "airplanes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_flights_cities_of_arrival_city_of_arrival_id",
+                        column: x => x.city_of_arrival_id,
+                        principalTable: "cities_of_arrival",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_flights_cities_of_departure_city_of_departure_id",
+                        column: x => x.city_of_departure_id,
+                        principalTable: "cities_of_departure",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -99,6 +141,16 @@ namespace application.Migrations
                 column: "airplane_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_flights_city_of_arrival_id",
+                table: "flights",
+                column: "city_of_arrival_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_flights_city_of_departure_id",
+                table: "flights",
+                column: "city_of_departure_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_tickets_flight_id",
                 table: "tickets",
                 column: "flight_id");
@@ -122,6 +174,12 @@ namespace application.Migrations
 
             migrationBuilder.DropTable(
                 name: "airplanes");
+
+            migrationBuilder.DropTable(
+                name: "cities_of_arrival");
+
+            migrationBuilder.DropTable(
+                name: "cities_of_departure");
         }
     }
 }

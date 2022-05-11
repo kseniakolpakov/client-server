@@ -44,6 +44,58 @@ namespace application.Migrations
                     b.ToTable("airplanes", (string)null);
                 });
 
+            modelBuilder.Entity("CityOfArrival", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasColumnOrder(1);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country_name");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cities_of_arrival");
+
+                    b.ToTable("cities_of_arrival", (string)null);
+                });
+
+            modelBuilder.Entity("CityOfDeparture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasColumnOrder(1);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("country_name");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_cities_of_departure");
+
+                    b.ToTable("cities_of_departure", (string)null);
+                });
+
             modelBuilder.Entity("Flight", b =>
                 {
                     b.Property<int>("Id")
@@ -57,6 +109,14 @@ namespace application.Migrations
                     b.Property<int>("AirplaneId")
                         .HasColumnType("integer")
                         .HasColumnName("airplane_id");
+
+                    b.Property<int>("CityOfArrivalId")
+                        .HasColumnType("integer")
+                        .HasColumnName("city_of_arrival_id");
+
+                    b.Property<int>("CityOfDepartureId")
+                        .HasColumnType("integer")
+                        .HasColumnName("city_of_departure_id");
 
                     b.Property<string>("Duration")
                         .IsRequired()
@@ -83,6 +143,12 @@ namespace application.Migrations
 
                     b.HasIndex("AirplaneId")
                         .HasDatabaseName("ix_flights_airplane_id");
+
+                    b.HasIndex("CityOfArrivalId")
+                        .HasDatabaseName("ix_flights_city_of_arrival_id");
+
+                    b.HasIndex("CityOfDepartureId")
+                        .HasDatabaseName("ix_flights_city_of_departure_id");
 
                     b.ToTable("flights", (string)null);
                 });
@@ -186,7 +252,25 @@ namespace application.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_flights_airplanes_airplane_id");
 
+                    b.HasOne("CityOfArrival", "CityOfArrival")
+                        .WithMany("Flights")
+                        .HasForeignKey("CityOfArrivalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_flights_cities_of_arrival_city_of_arrival_id");
+
+                    b.HasOne("CityOfDeparture", "CityOfDeparture")
+                        .WithMany("Flights")
+                        .HasForeignKey("CityOfDepartureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_flights_cities_of_departure_city_of_departure_id");
+
                     b.Navigation("Airplane");
+
+                    b.Navigation("CityOfArrival");
+
+                    b.Navigation("CityOfDeparture");
                 });
 
             modelBuilder.Entity("Ticket", b =>
@@ -211,6 +295,16 @@ namespace application.Migrations
                 });
 
             modelBuilder.Entity("Airplane", b =>
+                {
+                    b.Navigation("Flights");
+                });
+
+            modelBuilder.Entity("CityOfArrival", b =>
+                {
+                    b.Navigation("Flights");
+                });
+
+            modelBuilder.Entity("CityOfDeparture", b =>
                 {
                     b.Navigation("Flights");
                 });
