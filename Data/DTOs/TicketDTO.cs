@@ -7,7 +7,7 @@ public class TicketDTO
 	public float Price { get; set; }
 
 	public int Flight { get; set; }
-    public int Passenger { get; set; }
+    
 }
 
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/olesyakolpakova/Projects/application/application/application.csproj": {}
+    "/Users/olesyakolpakova/RiderProjects/client-server/application.csproj": {}
   },
   "projects": {
-    "/Users/olesyakolpakova/Projects/application/application/application.csproj": {
+    "/Users/olesyakolpakova/RiderProjects/client-server/application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/olesyakolpakova/Projects/application/application/application.csproj",
+        "projectUniqueName": "/Users/olesyakolpakova/RiderProjects/client-server/application.csproj",
         "projectName": "application",
-        "projectPath": "/Users/olesyakolpakova/Projects/application/application/application.csproj",
+        "projectPath": "/Users/olesyakolpakova/RiderProjects/client-server/application.csproj",
         "packagesPath": "/Users/olesyakolpakova/.nuget/packages/",
-        "outputPath": "/Users/olesyakolpakova/Projects/application/application/obj/",
+        "outputPath": "/Users/olesyakolpakova/RiderProjects/client-server/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/olesyakolpakova/.nuget/NuGet/NuGet.Config"
@@ -41,6 +41,10 @@
             "EFCore.NamingConventions": {
               "target": "Package",
               "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[6.0.5, )"
             },
             "Microsoft.AspNetCore.Cors": {
               "target": "Package",
@@ -99,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }

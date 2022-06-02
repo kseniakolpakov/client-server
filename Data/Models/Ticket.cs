@@ -14,6 +14,6 @@ public class Ticket
 	public float Price { get; set; }
 
 	public Flight Flight { get; set; }
-	public Passenger Passenger { get; set; }
+	
 
 }

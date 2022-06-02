@@ -1,5 +1,4 @@
-﻿
-public class FlightDTO
+﻿public class FlightDTO
 {
 
 	public string Number { get; set; }

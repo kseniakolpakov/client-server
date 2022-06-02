@@ -14,7 +14,8 @@ public class CityOfArrivalService
         CityOfArrival ncity = new CityOfArrival
         {
             Name = cityOfArrival.Name,
-            CountryName = cityOfArrival.CountryName
+            CountryName = cityOfArrival.CountryName,
+            ImageURL = cityOfArrival.ImageURL
         };
         if (cityOfArrival.Flights.Any())
         {
@@ -47,6 +48,7 @@ public class CityOfArrivalService
         {
             ncity.Name = cityOfArrival.Name;
             ncity.CountryName = cityOfArrival.CountryName;
+            ncity.ImageURL = cityOfArrival.ImageURL;
             if (cityOfArrival.Flights.Any())
             {
                 ncity.Flights = _context.Flights.ToList().IntersectBy(cityOfArrival.Flights, flight => flight.Id).ToList();

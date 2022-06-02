@@ -10,6 +10,8 @@ public class CityOfArrival
     public int Id { get; set; }
     public string Name { get; set; }
     public string CountryName { get; set; }
+    
+    public string ImageURL { get; set; }
 
     public IEnumerable<Flight> Flights { get; set; }
 }

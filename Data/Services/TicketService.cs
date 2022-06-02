@@ -23,10 +23,7 @@ public class TicketService
         {
             nticket.Flight = _context.Flights.ToList().SingleOrDefault(ticketInList => ticketInList.Id == ticket.Flight);
         };
-        if (ticket.Passenger != null)
-        {
-            nticket.Passenger = _context.Passengers.ToList().SingleOrDefault(ticketInList => ticketInList.Id == ticket.Passenger);
-        };
+        
         var result = _context.Tickets.Add(nticket);
         await _context.SaveChangesAsync();
         return await Task.FromResult(result.Entity);
@@ -36,7 +33,12 @@ public class TicketService
     public async Task<Ticket?> GetTicket(int id)
     {
 
-        var result = _context.Tickets.Include(t => t.Flight).FirstOrDefault(ticket => ticket.Id == id);
+        var result = _context.Tickets
+            .Include(t => t.Flight)
+            .ThenInclude(f => f.CityOfDeparture)
+            .Include(t => t.Flight)
+            .ThenInclude(f => f.CityOfArrival)
+            .FirstOrDefault(ticket => ticket.Id == id);
         
 
         return await Task.FromResult(result);
@@ -69,10 +71,7 @@ public class TicketService
         {
             nticket.Flight = _context.Flights.ToList().SingleOrDefault(ticketInList => ticketInList.Id == ticket.Flight);
         };
-        if (ticket.Passenger != null)
-        {
-            nticket.Passenger = _context.Passengers.ToList().SingleOrDefault(ticketInList => ticketInList.Id == ticket.Passenger);
-        };
+        
 
         return null;
     }

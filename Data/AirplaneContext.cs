@@ -26,7 +26,7 @@ public class AirplaneContext : DbContext
         modelBuilder.Entity<CityOfArrival>().Property(ca => ca.Id).ValueGeneratedOnAdd();
         modelBuilder.Entity<CityOfDeparture>().Property(cd => cd.Id).ValueGeneratedOnAdd();
 
-        modelBuilder.Entity<Passenger>().HasMany(ps => ps.Tickets).WithOne(t => t.Passenger);
+        modelBuilder.Entity<Passenger>().HasMany(ps => ps.Tickets);
         modelBuilder.Entity<Flight>().HasMany(fl => fl.Tickets).WithOne(t => t.Flight);
         modelBuilder.Entity<Airplane>().HasMany(ap => ap.Flights).WithOne(fl => fl.Airplane);
         modelBuilder.Entity<CityOfDeparture>().HasMany(cd => cd.Flights).WithOne(fl => fl.CityOfDeparture);
